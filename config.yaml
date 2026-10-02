@@ -1,0 +1,30 @@
+# הגדרות ההתנהגות של הבוט. סודות (טוקנים) נמצאים ב-.env ולא כאן.
+amazon:
+  base_url: https://www.amazon.in
+  timeout: 20
+  proxy: ""            # אופציונלי: http://user:pass@host:port
+  engine: auto         # auto / curl_cffi (מחקה Chrome) / requests
+
+monitor:
+  interval_seconds: 90          # זמן בסיס בין סבבים (עם jitter אקראי)
+  jitter_pct: 0.3
+  delay_between_products: [3, 8]
+  confirm_checks: 2             # כמה קריאות רצופות "במלאי" לפני התראה (מונע התראות שווא)
+  confirm_delay_seconds: 4
+  out_confirm_checks: 2         # כמה קריאות "אזל" כדי לאפשר התראה חדשה
+  realert_cooldown_seconds: 120
+  alert_on_first_run: true      # אם כבר יש מלאי בעת ההפעלה - להתריע פעם אחת
+  notify_out_of_stock: false    # הודעה גם כשהמלאי נגמר
+  health_alert_after: 8
+  block_alert_after: 5
+  block_backoff_max_seconds: 1800
+  state_file: data/state.json
+
+# ASINs שנמצאו בחיפוש. אפשר להוסיף/להסיר. max_price (אופציונלי) = התראה רק אם המחיר ב-₹ נמוך/שווה.
+products:
+  - {asin: B07K6RYVHR, label: "₹1000"}
+  - {asin: B093QF35KZ, label: "₹2000"}
+  - {asin: B07K6PVR8B, label: "₹3000"}
+  - {asin: B07K6RYVJ5, label: "₹4000"}
+  - {asin: B0CYPG8RYH, label: "₹7000"}
+  # - {asin: XXXXXXXXXX, label: "₹500"}     # ₹500 / ₹5000 - הדבק כאן את ה-ASIN מה-URL של הדף (/dp/ASIN)
